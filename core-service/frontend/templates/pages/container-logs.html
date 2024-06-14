@@ -1,0 +1,15 @@
+{{ define "title" }}
+  Logs for container {{ .Container.Name }}
+{{ end }}
+
+{{ define "main" }}
+  {{ template "nav" .NavProps }}
+  <h2 class="mb-0">Logs for container {{ .Container.Name }}</h2>
+  <p class="mt-0"><i>{{ .Container.ImageRef }}:{{ .Container.ImageTag }}</i></p>
+  {{ range .LatestLogsForZones }}
+    <h3>{{ .Zone }}</h3>
+    {{ range .Logs }}
+      <p>{{ . }}</p>
+    {{ end }}
+  {{ end }}
+{{ end }}

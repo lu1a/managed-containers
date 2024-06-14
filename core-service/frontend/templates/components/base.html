@@ -1,0 +1,20 @@
+{{ define "base" }}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>{{ template "title" . }}</title>
+
+  <link href="/static/styles.css" rel="stylesheet" />
+</head>
+
+<body class="bg-stone-100 dark:bg-stone-800 dark:text-white font-helvetica font-sans dark:font-light">
+  {{ template "main" . }}
+</body>
+</html>
+
+{{ end }}

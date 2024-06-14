@@ -1,0 +1,44 @@
+{{ define "title" }}
+  {{ .Project.Name }}
+{{ end }}
+
+{{ define "main" }}
+  {{ template "nav" .NavProps }}
+  <a href="/project/{{ .ProjectName }}">Back</a>
+  <br /><br /><br />
+
+  {{ if .Containers }}
+  <div class="flex">
+    <div>
+      <h3>Containers</h3>
+      <ul>
+      {{ range .Containers }}
+        <li>
+          <a href="/project/{{ $.ProjectName }}/c/{{ .Name }}/logs" class="dark:text-white text-black"><b>{{ .Name }}</b></a><br/>
+          <i>{{ .IPWithPortsDisplayStr }}</i>
+          <form action="/project/{{ $.Project.Name }}/{{ .Name }}/delete-container" method="POST">
+            <button>Delete</button>
+          </form>
+          <i>{{ .ImageRef }}:{{ .ImageTag }}</i><br/>
+          Status: <span style="text-transform: uppercase;">{{ .Status }}</span>
+          {{ if .IsRunOnce }}
+          <form action="/project/{{ $.ProjectName }}/{{ .Name }}/rerun-container-once" method="POST">
+            <button>Re-run this container once more</button>
+          </form>
+          {{ end }}
+        </li>
+        <br />
+      {{ end }}
+      </ul>
+      <div class="flex">
+        <a class="group w-52 h-24 m-2 rounded-lg shadow-lg text-center content-center cursor-pointer hover:w-56 hover:h-28 hover:m-0" href="/project/{{ .Project.Name }}/new-container"><div class="text-3xl no-underline group-hover:text-4xl">➕</div><div class="text-2xl group-hover:text-3xl font-light">Create container</div></a>
+      </div>
+    </div>
+  </div>
+
+  {{ else }}
+    <p>To begin,
+      <a href="/project/{{ .Project.Name }}/new-container"><button>create a new container </button></a>in this project.
+    </p>
+  {{ end }}
+{{ end }}

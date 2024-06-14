@@ -1,0 +1,116 @@
+{{ define "title" }}
+  Create new container
+{{ end }}
+
+{{ define "main" }}
+  {{ template "nav" .NavProps }}
+  <a href="/project/{{ .ProjectName }}/containers">Back</a>
+  <br /><br /><br />
+
+  <h2>New container</h2>
+  <form id="new-container-form" method="POST">
+    <input id="name" name="name" type="text" placeholder="Name" required pattern="[A-Za-z0-9\-_]+" title="Must only contain the characters a-z, A-Z, 0-9, '-', and '_'">
+    <br />
+    <br />
+    <input id="image-ref" name="image-ref" type="text" placeholder="docker.io/nginx" required title="Full URL to image like docker.io/nginx">:
+    <input id="image-tag" name="image-tag" type="text" placeholder="latest" title="Tag name of container image">
+    <br />
+    <br />
+    Is your image private? If so ->
+    <input id="image-pull-secret-url" name="image-pull-secret-url" type="text" placeholder="Full repo base URL" title="Ex. https://your-repo.com:4567">
+    <input id="image-pull-secret-username" name="image-pull-secret-username" type="text" placeholder="Username" title="Ex. username123">
+    <input id="image-pull-secret-password" name="image-pull-secret-password" type="text" placeholder="Password" title="Ex. Qwerty1234">
+    <input id="image-pull-secret-email" name="image-pull-secret-email" type="text" placeholder="Email" title="Ex. your@repo.com">
+    <input id="image-pull-secret-token" name="image-pull-secret-token" type="text" placeholder="Token (optional)" title="Ex. abcd1234">
+    <br />
+    <br />
+    <select name="run-type" id="run-type" required>
+      <option value="" disabled selected>Run type</option>
+      <option value="permanent">Permanent (container always up)</option>
+      <option value="once">Once (runs and then shuts down)</option>
+      <option value="schedule" disabled>Schedule (runs according to a schedule)</option>
+    </select>
+    <br />
+    <br />
+    <select name="cpu-millicores" id="cpu-millicores" required>
+      <option value="100" selected>0.1 cores</option>
+      <option value="500">0.5 cores</option>
+      <option value="1000">1 core</option>
+      <option value="2000">2 cores</option>
+      <option value="4000">4 cores</option>
+    </select>
+    <br />
+    <br />
+    <select name="memory-mb" id="memory-mb" required>
+      <option value="256" selected>256MB RAM</option>
+      <option value="512">512MB RAM</option>
+      <option value="1024">1GB RAM</option>
+      <option value="2048">2GB RAM</option>
+      <option value="4096">4GB RAM</option>
+      <option value="8192">8GB RAM</option>
+    </select>
+    <br />
+    <br />
+    <div id="envVarFields">
+      <div class="envVarField">
+          <input type="text" class="w-64" name="env-var-name[]" placeholder="Environment Variable Name">
+          <input type="text" class="w-64" name="env-var-value[]" placeholder="Environment Variable Value">
+      </div>
+    </div>
+    <button type="button" onclick="addEnvVarField()">Add another environment variable</button>
+    <br />
+    <br />
+    <div id="commandFields">
+      <div class="commandField">
+        <input id="command[]" name="command[]" type="text" placeholder="Command (optional)">
+      </div>
+    </div>
+    <button type="button" onclick="addCommandField()">Add another command section</button>
+    <br />
+    <div id="portFields">
+      <div class="portField">
+        <input id="port[]" name="port[]" type="text" value="80">
+      </div>
+    </div>
+    <button type="button" onclick="addPortField()">Add another port</button>
+    <br />
+    <fieldset class="border-0">
+      <p>Zones</p>
+      {{ range .Zones }}
+      <label><input type="checkbox" name="zone[]" value="{{ . }}">{{ . }}</label>
+      {{ end }}
+    </fieldset>
+    <br />
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    function addEnvVarField() {
+      var field = document.createElement('div');
+      field.classList.add('envVarField');
+      field.innerHTML = `
+        <input type="text" class="w-64" name="env-var-name[]" placeholder="Environment Variable Name">
+        <input type="text" class="w-64" name="env-var-value[]" placeholder="Environment Variable Value">
+      `;
+      document.getElementById('envVarFields').appendChild(field);
+    }
+
+    function addCommandField() {
+      var field = document.createElement('div');
+      field.classList.add('commandField');
+      field.innerHTML = `
+        <input id="command[]" name="command[]" type="text" placeholder="Next command">
+      `;
+      document.getElementById('commandFields').appendChild(field);
+    }
+
+    function addPortField() {
+      var field = document.createElement('div');
+      field.classList.add('portField');
+      field.innerHTML = `
+        <input id="port[]" name="port[]" type="text" placeholder="Another port">
+      `;
+      document.getElementById('portFields').appendChild(field);
+    }
+  </script>
+{{ end }}

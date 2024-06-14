@@ -1,0 +1,11 @@
+{{ define "nav" }}
+  <nav class="flex justify-between">
+    <div class="flex items-center">
+      <a class="text-4xl cursor-pointer" href="/home">🏠</a>
+      <div class="ml-3 text-4xl">{{ .PageTitle }}</div>
+    </div>
+    <div>
+      <a href="/account-settings"><img class="w-16 h-16 rounded-full" id="avatar" alt="account profile image" src="{{ .Account.AvatarURL }}"/></a>
+    </div>
+  </nav>
+{{ end }}

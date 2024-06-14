@@ -1,0 +1,24 @@
+{{ define "title" }}
+  Create new object storage
+{{ end }}
+
+{{ define "main" }}
+  {{ template "nav" .NavProps }}
+  <a href="/project/{{ .ProjectName }}">Back</a>
+  <br /><br /><br />
+
+  <h2>New object storage</h2>
+  <form id="new-container-form" method="POST">
+    <input id="name" name="name" type="text" placeholder="Name" required pattern="[A-Za-z0-9\-_]+" title="Must only contain the characters a-z, A-Z, 0-9, '-', and '_'">
+    <br />
+    <br />
+    <fieldset class="border-0">
+      <p>Zones</p>
+      {{ range .Zones }}
+      <label><input type="checkbox" name="zone[]" value="{{ . }}">{{ . }}</label>
+      {{ end }}
+    </fieldset>
+    <br />
+    <button type="submit">Submit</button>
+  </form>
+{{ end }}

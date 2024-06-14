@@ -1,0 +1,14 @@
+{{ define "title" }}
+  Create new project
+{{ end }}
+
+{{ define "main" }}
+  {{ template "nav" . }}
+
+  <h2>New project</h2>
+  <form method="POST">
+    <input id="name" name="name" type="text" placeholder="Name" required pattern="[A-Za-z0-9\-_]+" title="Must only contain the characters a-z, A-Z, 0-9, '-', and '_'">
+    <input id="description" name="description" type="text" placeholder="Short description">
+    <button type="submit">Submit</button>
+  </form>
+{{ end }}

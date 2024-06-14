@@ -1,0 +1,22 @@
+{{ define "title" }}
+  Home
+{{ end }}
+
+{{ define "main" }}
+  {{ template "nav" .NavProps }}
+
+  {{ if .Projects }}
+
+  <div class="max-w-lg flex m-auto justify-center flex-wrap">
+  {{ range .Projects }}
+    <a class="group w-56 h-24 m-2 rounded-lg shadow-lg text-center content-center cursor-pointer hover:w-60 hover:h-28 hover:m-0" href="/project/{{ .Name }}"><div class="text-3xl group-hover:hidden">📁</div><div class="text-4xl hidden group-hover:block">📂</div><div class="text-2xl group-hover:text-3xl font-light">{{ .Name }}</div></a>
+  {{ end }}
+
+    <a class="group w-56 h-24 m-2 rounded-lg shadow-inner bg-gray-200 text-center content-center cursor-pointer" href="/new-project"><div class="text-3xl group-hover:text-2xl">➕</div><div class="text-2xl group-hover:text-xl font-light">Another project</div></a>
+  </div>
+
+  {{ else }}
+    <p>To begin, <a href="/new-project"><button>create a project</button></a></p>
+  {{ end }}
+  
+{{ end }}

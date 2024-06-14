@@ -1,0 +1,29 @@
+{{ define "title" }}
+  Account settings
+{{ end }}
+
+{{ define "main" }}
+  {{ template "nav" .NavProps }}
+  <a href="/home"><button>Back home</button></a>
+  <h2 class="mb-0">Account settings</h2>
+  <p>Username: {{ .Account.Username }}</p>
+  <p>Name: {{ .Account.Name }}</p>
+  <p>Email: {{ .Account.Email }}</p>
+  <p>Location: {{ .Account.Location }}</p>
+
+  {{ if .NewAPIToken }}
+  <p>Your new API token is <b>{{ .NewAPIToken }}</b></p>
+  {{ else }}
+  <form action="/account/generate-api-token" method="POST">
+    <button>Generate new API token</button>
+  </form>
+  {{ end }}
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.location.pathname !== '/account-settings') {
+        history.pushState(null, '', '/account-settings');
+      }
+    });
+  </script>
+{{ end }}

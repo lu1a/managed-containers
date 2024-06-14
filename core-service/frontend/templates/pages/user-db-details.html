@@ -1,0 +1,24 @@
+{{ define "title" }}
+  Details for {{ .Project.UserDBClaimName }}
+{{ end }}
+
+{{ define "main" }}
+  {{ template "nav" .NavProps }}
+  <h2 class="mb-0">Details for {{ .Project.UserDBClaimName }}</h2>
+  <p class="mt-0"><i>PostgreSQL 15</i></p>
+  <table>
+    <tr>
+      <th>Username</th>
+      <th>Password</th>
+    </tr>
+    {{ range .UserDB.Credentials.Credentials }}
+      <tr>
+        <td>{{ .Username }}</td><td>{{ .Password }}</td>
+      </tr>
+    {{ end }}
+  </table>
+  <form action="/project/{{ .Project.Name }}/db/{{ .Project.UserDBClaimName }}/new-user" method="POST">
+    <input type="text" name="username" pattern="[A-Za-z0-9_]+"  title="Must only contain the characters a-z, A-Z, 0-9, and '_'" placeholder="new username" required>
+    <button>Create new user in this DB</button>
+  </form>
+{{ end }}

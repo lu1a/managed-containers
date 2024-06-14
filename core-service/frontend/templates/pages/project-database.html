@@ -1,0 +1,36 @@
+{{ define "title" }}
+  {{ .Project.Name }}
+{{ end }}
+
+{{ define "main" }}
+  {{ template "nav" .NavProps }}
+  <a href="/project/{{ .ProjectName }}">Back</a>
+  <br /><br /><br />
+
+  {{ if .UserDBClaim }}
+  <div class="flex">
+    <div>
+      <h3>Database</h3>
+      {{ if .UserDBClaim.UserDBClaimID }}
+      <ul>
+        <li>
+          <a href="/project/{{ .Project.Name }}/db/{{ .Project.UserDBClaimName }}" class="dark:text-white text-black"><b>{{ .Project.UserDBClaimName }}</b></a>
+          <form action="/project/{{ .Project.Name }}/delete-db" method="POST">
+            <button>Delete</button>
+          </form>
+          Status: <span style="text-transform: uppercase;">{{ .UserDBClaim.Status }}</span>
+        </li>
+        <br />
+      </ul>
+      {{ else }}
+      <a id="new-db-link" href="/project/{{ .Project.Name }}/new-db"><button>create a database for this project</button></a>
+      {{ end }}
+    </div>
+  </div>
+
+  {{ else }}
+    <p>To begin,
+      <a id="new-db-link" href="/project/{{ .Project.Name }}/new-db"><button>create a database </button></a>in this project.
+    </p>
+  {{ end }}
+{{ end }}

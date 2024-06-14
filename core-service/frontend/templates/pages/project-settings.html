@@ -1,0 +1,20 @@
+{{ define "title" }}
+  {{ .Project.Name }}
+{{ end }}
+
+{{ define "main" }}
+  {{ template "nav" .NavProps }}
+  <a href="/project/{{ .ProjectName }}">Back</a>
+  <br /><br /><br />
+
+  <p><i>{{ .Project.Description }}</i></p>
+  <form action="/project/{{ .ProjectName }}/generate-auth-token" method="POST">
+    <button>Generate auth token for project</button>
+  </form>
+  <br />
+  <p>Collaborators: {{ range $index, $element := .Project.SharedUsernames }}{{ if $index }}, {{ end }}{{ $element }}{{ end }}</p>
+  <form action="/project/{{ .ProjectName }}/share-with-user" method="POST">
+    <input type="text" name="username-to-add" required>
+    <button>Share this project with another user</button>
+  </form>
+{{ end }}

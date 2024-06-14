@@ -1,0 +1,9 @@
+{{ define "title" }}
+  Log in
+{{ end }}
+
+{{ define "main" }}
+  <div class="max-w-lg flex m-auto justify-center flex-wrap">
+    <a class="group w-56 h-24 m-2 rounded-lg shadow-lg text-center content-center cursor-pointer hover:w-60 hover:h-28 hover:m-0" href="https://github.com/login/oauth/authorize?client_id=fb2caca79be2429240a5&redirect_uri=http://{{ . }}/api/auth/oauth/redirect"><div class="text-3xl group-hover:text-4xl">🚪</div><div class="text-2xl group-hover:text-3xl font-light">Log in with GitHub</div></a>
+  </div>
+{{ end }}
